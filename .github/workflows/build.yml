@@ -63,3 +63,14 @@ jobs:
         with:
           name: Release-apk
           path: app/build/outputs/apk/release/app-release.apk
+
+      - name: Build Release AAB
+        env:
+          JAVA_HOME: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/17.0.14-7/x64
+        run: ./gradlew bundleRelease
+
+      - name: Upload AAB artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: Release-aab
+          path: app/build/outputs/bundle/release/app-release.aab
