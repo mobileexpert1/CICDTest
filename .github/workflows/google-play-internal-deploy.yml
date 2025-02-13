@@ -50,6 +50,10 @@ jobs:
           JAVA_HOME: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/17.0.14-7/x64
         run: ./gradlew bundleRelease
 
+      # List directory contents to verify AAB path
+      - name: List directory contents to verify AAB path
+        run: ls -R app/build/outputs/bundle/release/
+
       # Upload Release AAB as artifact
       - name: Upload Release AAB artifact
         uses: actions/upload-artifact@v4
@@ -57,14 +61,14 @@ jobs:
           name: Release-aab
           path: app/build/outputs/bundle/release/app-release.aab
 
-#      # Deploy AAB to Google Play (Internal Test Track)
-#      - name: Deploy to Google Play (Internal Test)
-#        uses: r0adkll/upload-google-play@v1
-#        with:
-#          serviceAccountJson: ${{ secrets.GOOGLE_PLAY_JSON_KEY }}  # Use the secret with the Google Play service account JSON
-#          packageName: com.cicdtest  # Replace with your app's package name
-#          releaseFiles: app/build/outputs/bundle/release/app-release.aab  # Upload the AAB
-#          track: internal  # Set to 'internal' for testing
-#          inAppUpdatePriority: 0
-#          status: completed
-#          changesNotSentForReview: false
+      # Deploy AAB to Google Play (Internal Test Track)
+      - name: Deploy to Google Play (Internal Test)
+        uses: r0adkll/upload-google-play@v1
+        with:
+          serviceAccountJson: ${{ secrets.GOOGLE_PLAY_JSON_KEY }}  # Use the secret with the Google Play service account JSON
+          packageName: com.cicdtest  # Replace with your app's package name
+          releaseFiles: app/build/outputs/bundle/release/app-release.aab  # Upload the AAB
+          track: internal  # Set to 'internal' for testing
+          inAppUpdatePriority: 0
+          status: completed
+          changesNotSentForReview: false
