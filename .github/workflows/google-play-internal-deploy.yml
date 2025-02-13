@@ -13,21 +13,25 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      # Checkout the code from the repository
       - name: Checkout code
         uses: actions/checkout@v4
 
+      # Set up JDK 11 for building the project
       - name: Set up JDK 11
         uses: actions/setup-java@v2
         with:
           java-version: 11
           distribution: 'temurin'
 
+      # Set up JDK 17 for Gradle (if required for newer versions)
       - name: Set up JDK 17 for Gradle
         uses: actions/setup-java@v2
         with:
           java-version: 17
           distribution: 'temurin'
 
+      # Cache Gradle dependencies to speed up subsequent builds
       - name: Cache Gradle dependencies
         uses: actions/cache@v4
         with:
@@ -36,19 +40,26 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-gradle-
 
+      # Set execute permissions for gradlew script
       - name: Set execute permissions for gradlew
         run: chmod +x ./gradlew
 
-      - name: Decrypt JSON Key
+      # Decrypt Google Play JSON Key from GitHub Secrets
+      - name: Decrypt Google Play JSON Key
         run: echo "${{ secrets.GOOGLE_PLAY_JSON_KEY }}" > /tmp/google-play-key.json
 
+      # Build the project using Gradle
       - name: Build the project
         run: ./gradlew assembleRelease
 
-      - name: Deploy to Google Play
+      # Deploy the APK to Google Play's Internal Test track
+      - name: Deploy to Google Play (Internal Test)
         uses: r0adkll/upload-google-play@v1
         with:
-          serviceAccountJsonPath: /tmp/google-play-key.json
-          packageName: com.cicdtest
-          releaseFile: app/build/outputs/apk/release/app-release.apk
-          track: internal
+          serviceAccountJson: ${{ secrets.GOOGLE_PLAY_JSON_KEY }}  # Use the secret directly
+          packageName: com.cicdtest  # Replace with your app's package name
+          releaseFile: app/build/outputs/apk/release/app-release.apk  # Path to the APK built by Gradle
+          track: internal  # Upload to the internal track for testing
+          inAppUpdatePriority: 0
+          status: completed
+          changesNotSentForReview: false
