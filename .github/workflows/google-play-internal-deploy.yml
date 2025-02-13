@@ -13,76 +13,42 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      # Checkout the code from the repository
       - name: Checkout code
         uses: actions/checkout@v4
 
-      # Set up JDK 11 for building the project
       - name: Set up JDK 11
         uses: actions/setup-java@v2
         with:
           java-version: 11
           distribution: 'temurin'
 
-      # Set up JDK 17 for Gradle (if required for newer versions)
       - name: Set up JDK 17 for Gradle
         uses: actions/setup-java@v2
         with:
           java-version: 17
           distribution: 'temurin'
 
-      # Cache Gradle dependencies to speed up subsequent builds
       - name: Cache Gradle dependencies
         uses: actions/cache@v4
         with:
-            path: ~/.gradle/caches
-            key: Linux-gradle-17529f50ef247754087ba9a97b73129a78e9db33cea4f2a73c259aa0a188cd51
-            restore-keys: Linux-gradle-
-            enableCrossOsArchive: false
-            fail-on-cache-miss: false
-#          path: ~/.gradle/caches
-#          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*') }}
-#          restore-keys: |
-#            ${{ runner.os }}-gradle-
+          path: ~/.gradle/caches
+          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*') }}
+          restore-keys: |
+            ${{ runner.os }}-gradle-
 
-      # Set execute permissions for gradlew script
       - name: Set execute permissions for gradlew
         run: chmod +x ./gradlew
 
-      # Build Release AAB
-      - name: Build Release AAB
-        env:
-          JAVA_HOME: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/17.0.14-7/x64
-        run: ./gradlew bundleRelease
+      - name: Decrypt JSON Key
+        run: echo "${{ secrets.GOOGLE_PLAY_JSON_KEY }}" > /tmp/google-play-key.json
 
-      # Verify AAB file exists
-      - name: Verify AAB file exists
-        run: ls -l app/build/outputs/bundle/release/
+      - name: Build the project
+        run: ./gradlew assembleRelease
 
-      # Log environment information
-      - name: Log environment information
-        run: |
-          echo "Current directory: $(pwd)"
-          echo "Listing current directory:"
-          ls -l
-          echo "Listing AAB directory:"
-          ls -l app/build/outputs/bundle/release/
-
-      # Upload Release AAB as artifact
-      - name: Upload Release AAB artifact
-        uses: actions/upload-artifact@v4
-        with:
-          name: Release-aab
-          path: app/build/outputs/bundle/release/app-release.aab
-
-      # Deploy AAB to Google Play (Internal Test Track)
-      - name: Deploy to Google Play (Internal Test)
+      - name: Deploy to Google Play
         uses: r0adkll/upload-google-play@v1
         with:
-          serviceAccountJson: ${{ secrets.GOOGLE_PLAY_JSON_KEY }}  # Use the secret with the Google Play service account JSON
-          packageName: com.cicdtest  # Replace with your app's package name
-          releaseFiles: app/build/outputs/bundle/release/app-release.aab  # Upload the AAB
-          track: internal  # Set to 'internal' for testing
-          inAppUpdatePriority: 0
-          status: completed
-          changesNotSentForReview: false
+          serviceAccountJsonPath: /tmp/google-play-key.json
+          packageName: com.cicdtest
+          releaseFile: app/build/outputs/apk/release/app-release.apk
+          track: internal
