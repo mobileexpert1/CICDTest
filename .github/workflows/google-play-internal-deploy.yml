@@ -54,9 +54,10 @@ jobs:
       - name: Verify AAB file exists
         run: ls -l app/build/outputs/bundle/release/
 
-      # Print absolute path to AAB file
+      # Print absolute path to the AAB file
       - name: Print absolute path to the AAB
-        run:echo "Absolute path: $(pwd)/app/build/outputs/bundle/release/app-release.aab"
+        run: |
+          echo "Absolute path: $(pwd)/app/build/outputs/bundle/release/app-release.aab"
 
       # Upload Release AAB as artifact
       - name: Upload Release AAB artifact
