@@ -71,7 +71,7 @@ jobs:
 #          echo "Google Play Service Account Loaded: ${{ secrets.GOOGLE_PLAY_JSON_KEY }}
       - name: Debug Google Play Service Account
         run: |
-          if [ -z "${{ secrets.GOOGLE_PLAY_JSON_KEY }}" ]; then
+          if [ -n "${{ secrets.GOOGLE_PLAY_JSON_KEY }}" ]; then
             echo "Service account not loaded!"
           else
             echo "Service account loaded"
