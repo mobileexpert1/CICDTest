@@ -50,31 +50,29 @@ jobs:
           JAVA_HOME: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/17.0.14-7/x64
         run: ./gradlew bundleRelease
 
-      # Verify AAB file exists
-      - name: Verify AAB file exists
-        run: ls -l app/build/outputs/bundle/release/
-
-      # Print absolute path to the AAB file
-      - name: Print absolute path to the AAB
+      # List contents of the release directory for debug purposes
+      - name: List contents of the release directory
         run: |
-          echo "Absolute path: $(pwd)/app/build/outputs/bundle/release/app-release.aab"
+          echo "Checking the release directory"
+          ls -l ./app/build/outputs/bundle/release/
 
-      # Upload Release AAB as artifact
-      - name: Upload Release AAB artifact
-        uses: actions/upload-artifact@v4
-        with:
-          name: Release-aab
-          path: app/build/outputs/bundle/release/app-release.aab
+      # Check if the AAB exists before proceeding
+      - name: Check if AAB exists
+        run: |
+          if [ -f ./app/build/outputs/bundle/release/app-release.aab ]; then
+            echo "AAB file exists!"
+          else
+            echo "AAB file does not exist!" && exit 1
+          fi
 
-      # Deploy AAB to Google Play (Internal Test Track)
+      # Deploy to Google Play (Internal Test)
       - name: Deploy to Google Play (Internal Test)
         uses: r0adkll/upload-google-play@v1
         with:
-          serviceAccountJson: ${{ secrets.GOOGLE_PLAY_JSON_KEY }}  # Pass the JSON key directly
-          packageName: com.cicdtest  # Replace with your app's package name
-#          releaseFiles: ./app/build/outputs/bundle/release/app-release.aab  # Upload the AAB
-          releaseFiles: /home/runner/work/CICDTest/CICDTest/app/build/outputs/bundle/release/app-release.aab  # Upload the AAB
-          track: internal  # Set to 'internal' for testing
+          serviceAccountJson: ${{ secrets.GOOGLE_PLAY_JSON_KEY }}
+          packageName: com.cicdtest
+          releaseFiles: ./app/build/outputs/bundle/release/app-release.aab
+          track: internal
           inAppUpdatePriority: 0
           status: completed
           changesNotSentForReview: false
