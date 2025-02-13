@@ -48,17 +48,21 @@ jobs:
       - name: Decrypt Google Play JSON Key
         run: echo "${{ secrets.GOOGLE_PLAY_JSON_KEY }}" > /tmp/google-play-key.json
 
-      # Build the project using Gradle
-      - name: Build the project
-        run: ./gradlew assembleRelease
+      # Build the project and generate Android App Bundle (AAB)
+      - name: Build the AAB (Release)
+        run: ./gradlew bundleRelease  # This will generate the .aab file
 
-      # Deploy the APK to Google Play's Internal Test track
+      # Print the contents of the directory to verify the AAB path
+      - name: List directory contents
+        run: ls -R app/build/outputs/bundle/release/
+
+      # Deploy the AAB to Google Play's Internal Test track
       - name: Deploy to Google Play (Internal Test)
         uses: r0adkll/upload-google-play@v1
         with:
           serviceAccountJson: ${{ secrets.GOOGLE_PLAY_JSON_KEY }}  # Use the secret directly
           packageName: com.cicdtest  # Replace with your app's package name
-          releaseFile: app/build/outputs/apk/release/app-release.apk  # Path to the APK built by Gradle
+          releaseFiles: app/build/outputs/bundle/release/app-release.aab  # Update to use AAB file
           track: internal  # Upload to the internal track for testing
           inAppUpdatePriority: 0
           status: completed
