@@ -57,14 +57,14 @@ jobs:
           name: Release-aab
           path: app/build/outputs/bundle/release/app-release.aab
 
-      # Deploy AAB to Google Play (Internal Test Track)
-      - name: Deploy to Google Play (Internal Test)
-        uses: r0adkll/upload-google-play@v1
-        with:
-          serviceAccountJson: ${{ secrets.GOOGLE_PLAY_JSON_KEY }}  # Use the secret with the Google Play service account JSON
-          packageName: com.cicdtest  # Replace with your app's package name
-          releaseFiles: app/build/outputs/bundle/release/app-release.aab  # Upload the AAB
-          track: internal  # Set to 'internal' for testing
-          inAppUpdatePriority: 0
-          status: completed
-          changesNotSentForReview: false
+#      # Deploy AAB to Google Play (Internal Test Track)
+#      - name: Deploy to Google Play (Internal Test)
+#        uses: r0adkll/upload-google-play@v1
+#        with:
+#          serviceAccountJson: ${{ secrets.GOOGLE_PLAY_JSON_KEY }}  # Use the secret with the Google Play service account JSON
+#          packageName: com.cicdtest  # Replace with your app's package name
+#          releaseFiles: app/build/outputs/bundle/release/app-release.aab  # Upload the AAB
+#          track: internal  # Set to 'internal' for testing
+#          inAppUpdatePriority: 0
+#          status: completed
+#          changesNotSentForReview: false
