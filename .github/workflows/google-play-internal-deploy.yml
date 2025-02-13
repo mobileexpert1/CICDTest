@@ -44,26 +44,27 @@ jobs:
       - name: Set execute permissions for gradlew
         run: chmod +x ./gradlew
 
-      # Decrypt Google Play JSON Key from GitHub Secrets
-      - name: Decrypt Google Play JSON Key
-        run: echo "${{ secrets.GOOGLE_PLAY_JSON_KEY }}" > /tmp/google-play-key.json
+      # Build Release AAB
+      - name: Build Release AAB
+        env:
+          JAVA_HOME: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/17.0.14-7/x64
+        run: ./gradlew bundleRelease
 
-      # Build the project and generate Android App Bundle (AAB)
-      - name: Build the AAB (Release)
-        run: ./gradlew bundleRelease  # This will generate the .aab file
+      # Upload Release AAB as artifact
+      - name: Upload Release AAB artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: Release-aab
+          path: app/build/outputs/bundle/release/app-release.aab
 
-      # Print the contents of the directory to verify the AAB path
-      - name: List directory contents
-        run: ls -R app/build/outputs/bundle/release/
-
-      # Deploy the AAB to Google Play's Internal Test track
+      # Deploy AAB to Google Play (Internal Test Track)
       - name: Deploy to Google Play (Internal Test)
         uses: r0adkll/upload-google-play@v1
         with:
-          serviceAccountJson: ${{ secrets.GOOGLE_PLAY_JSON_KEY }}  # Use the secret directly
+          serviceAccountJson: ${{ secrets.GOOGLE_PLAY_JSON_KEY }}  # Use the secret with the Google Play service account JSON
           packageName: com.cicdtest  # Replace with your app's package name
-          releaseFiles: app/build/outputs/bundle/release/app-release.aab  # Update to use AAB file
-          track: internal  # Upload to the internal track for testing
+          releaseFiles: app/build/outputs/bundle/release/app-release.aab  # Upload the AAB
+          track: internal  # Set to 'internal' for testing
           inAppUpdatePriority: 0
           status: completed
           changesNotSentForReview: false
