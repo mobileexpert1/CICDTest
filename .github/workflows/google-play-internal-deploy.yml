@@ -50,9 +50,18 @@ jobs:
           JAVA_HOME: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/17.0.14-7/x64
         run: ./gradlew bundleRelease
 
-      # List directory contents to verify AAB path
-      - name: List directory contents to verify AAB path
-        run: ls -R app/build/outputs/bundle/release/
+      # Verify AAB file exists
+      - name: Verify AAB file exists
+        run: ls -l app/build/outputs/bundle/release/
+
+      # Log environment information
+      - name: Log environment information
+        run: |
+          echo "Current directory: $(pwd)"
+          echo "Listing current directory:"
+          ls -l
+          echo "Listing AAB directory:"
+          ls -l app/build/outputs/bundle/release/
 
       # Upload Release AAB as artifact
       - name: Upload Release AAB artifact
