@@ -35,10 +35,15 @@ jobs:
       - name: Cache Gradle dependencies
         uses: actions/cache@v4
         with:
-          path: ~/.gradle/caches
-          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*') }}
-          restore-keys: |
-            ${{ runner.os }}-gradle-
+            path: ~/.gradle/caches
+            key: Linux-gradle-17529f50ef247754087ba9a97b73129a78e9db33cea4f2a73c259aa0a188cd51
+            restore-keys: Linux-gradle-
+            enableCrossOsArchive: false
+            fail-on-cache-miss: false
+#          path: ~/.gradle/caches
+#          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*') }}
+#          restore-keys: |
+#            ${{ runner.os }}-gradle-
 
       # Set execute permissions for gradlew script
       - name: Set execute permissions for gradlew
