@@ -72,7 +72,8 @@ jobs:
         with:
           serviceAccountJson: ${{ secrets.GOOGLE_PLAY_JSON_KEY }}  # Pass the JSON key directly
           packageName: com.cicdtest  # Replace with your app's package name
-          releaseFiles: ./app/build/outputs/bundle/release/app-release.aab  # Upload the AAB
+#          releaseFiles: ./app/build/outputs/bundle/release/app-release.aab  # Upload the AAB
+          releaseFiles: /home/runner/work/CICDTest/CICDTest/app/build/outputs/bundle/release/app-release.aab  # Upload the AAB
           track: internal  # Set to 'internal' for testing
           inAppUpdatePriority: 0
           status: completed
