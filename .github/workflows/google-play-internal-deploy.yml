@@ -66,9 +66,16 @@ jobs:
           fi
 
 
-      - name: Debug GitHub Secrets
+#      - name: Debug GitHub Secrets
+#        run: |
+#          echo "Google Play Service Account Loaded: ${{ secrets.GOOGLE_PLAY_JSON_KEY }}
+      - name: Debug Google Play Service Account
         run: |
-          echo "Google Play Service Account Loaded: ${{ secrets.GOOGLE_PLAY_JSON_KEY }}
+          if [ -z "${{ secrets.GOOGLE_PLAY_JSON_KEY }}" ]; then
+            echo "Service account not loaded!"
+          else
+            echo "Service account loaded"
+          fi
       # Deploy to Google Play (Internal Test)
       - name: Deploy to Google Play (Internal Test)
         uses: r0adkll/upload-google-play@v1
