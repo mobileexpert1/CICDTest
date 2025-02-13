@@ -40,7 +40,7 @@ jobs:
         run: chmod +x ./gradlew
 
       - name: Decrypt JSON Key
-        run: echo "${{ secrets.GOOGLE_PLAY_JSON_KEY }}" > /tmp/google-play-key.json
+        run: echo "${{ secrets.GOOGLE_PLAY_JSON_KEY }}" > /tmp/GOOGLE_PLAY_JSON_KEY.json
 
       - name: Build the project
         run: ./gradlew assembleRelease
@@ -48,7 +48,7 @@ jobs:
       - name: Deploy to Google Play
         uses: r0adkll/upload-google-play@v1
         with:
-          serviceAccountJsonPath: D:\work splace\cicd\paltu-98634-57a3c388d3ae.json
+          serviceAccountJsonPath: /tmp/GOOGLE_PLAY_JSON_KEY.json
           packageName: com.cicdtest
           releaseFile: app/build/outputs/apk/release/app-release.apk
           track: internal
