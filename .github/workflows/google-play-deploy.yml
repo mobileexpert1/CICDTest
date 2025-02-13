@@ -1,10 +1,7 @@
-#name: Build
+#name: Build and Deploy
 #
 #on:
 #  push:
-#    branches:
-#      - master
-#  pull_request:
 #    branches:
 #      - master
 #
@@ -39,17 +36,6 @@
 #      - name: Set execute permissions for gradlew
 #        run: chmod +x ./gradlew
 #
-#      - name: Build Release APK
-#        env:
-#          JAVA_HOME: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/17.0.14-7/x64
-#        run: ./gradlew assembleRelease
-#
-#      - name: Upload APK artifact
-#        uses: actions/upload-artifact@v4
-#        with:
-#          name: Release-apk
-#          path: app/build/outputs/apk/release/app-release.apk
-#
 #      - name: Build Release AAB
 #        env:
 #          JAVA_HOME: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/17.0.14-7/x64
@@ -60,3 +46,11 @@
 #        with:
 #          name: Release-aab
 #          path: app/build/outputs/bundle/release/app-release.aab
+#
+#      - name: Deploy to Google Play
+#        uses: r0adkll/upload-google-play@v1
+#        with:
+#          serviceAccountJsonPlainText: ${{ secrets.GOOGLE_PLAY_SERVICE_ACCOUNT_JSON }}
+#          packageName: com.cicdtest
+#          releaseFile: app/build/outputs/bundle/release/app-release.aab
+#          track: production

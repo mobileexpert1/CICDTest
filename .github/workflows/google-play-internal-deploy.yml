@@ -1,0 +1,34 @@
+name: Deploy to Google Play
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up JDK
+        uses: actions/setup-java@v2
+        with:
+          distribution: 'adopt'
+          java-version: '11'
+
+      - name: Decrypt JSON Key
+        run: echo "${{ secrets.GOOGLE_PLAY_JSON_KEY }}" > /tmp/google-play-key.json
+
+      - name: Build the project
+        run: ./gradlew assembleRelease
+
+      - name: Deploy to Google Play
+        uses: r0adkll/upload-google-play@v1
+        with:
+          serviceAccountJsonPath: D:\work splace\cicd\paltu-98634-57a3c388d3ae.json
+          packageName: com.cicdtest
+          releaseFile: app/build/outputs/apk/release/app-release.apk
+          track: internal
