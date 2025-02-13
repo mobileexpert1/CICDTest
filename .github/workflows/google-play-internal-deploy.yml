@@ -45,6 +45,7 @@ jobs:
       - name: Build the project
         run: ./gradlew assembleRelease
 
+
       - name: Deploy to Google Play
         uses: r0adkll/upload-google-play@v1
         with:
