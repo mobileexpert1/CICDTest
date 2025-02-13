@@ -65,6 +65,10 @@ jobs:
             echo "AAB file does not exist!" && exit 1
           fi
 
+
+      - name: Debug GitHub Secrets
+        run: |
+          echo "Google Play Service Account Loaded: ${{ secrets.GOOGLE_PLAY_JSON_KEY }}
       # Deploy to Google Play (Internal Test)
       - name: Deploy to Google Play (Internal Test)
         uses: r0adkll/upload-google-play@v1
