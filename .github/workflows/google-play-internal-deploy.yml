@@ -61,6 +61,10 @@ jobs:
       # Step 5: List files in the build output directory (for debugging)
       - name: List files in build directory
         run: ls -R ./app/build/outputs/
+
+      - name: Check file permissions
+        run: ls -l ./app/build/outputs/bundle/release/
+
       # Check file existence and permissions
       - name: Check if AAB file exists
         run: |
