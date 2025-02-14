@@ -86,8 +86,7 @@ jobs:
           inAppUpdatePriority: 5
           status: completed
           changesNotSentForReview: false
-          whatsNewDirectory: ReleaseNotes/
-          mappingFile: app/build/outputs/mapping/release/mapping.txt
+
         env:
           JAVA_HOME: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/17.0.14-7/x64
 
