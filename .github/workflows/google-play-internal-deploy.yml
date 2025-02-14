@@ -81,7 +81,7 @@ jobs:
         with:
           serviceAccountJson: ${{ secrets.GOOGLE_PLAY_JSON_KEY }}  # Use the secret with the Google Play service account JSON
           packageName: com.cicdtest
-          releaseFiles: ./app/build/outputs/bundle/release/app-release.aab  # Relative path (use absolute if necessary)
+          releaseFiles: /app/build/outputs/bundle/release:app-release.aab  # Relative path (use absolute if necessary)
           track: internal  # Set to 'internal' for testing
           inAppUpdatePriority: 0
           status: completed
