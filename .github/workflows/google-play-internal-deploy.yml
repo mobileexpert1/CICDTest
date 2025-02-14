@@ -76,7 +76,7 @@ jobs:
 
       # Deploy to Google Play (Internal Test) without printing sensitive data
       - name: Deploy to Google Play (Internal Test)
-        uses: r0adkll/upload-google-play@v1
+        uses: r0adkll/upload-google-play@v1.0.15
         with:
 #          serviceAccountJson: ${{ secrets.GOOGLE_PLAY_JSON_KEY }}  # Do not expose secrets directly in logs
           serviceAccountJsonPlainText: ${{ secrets.GOOGLE_PLAY_JSON_KEY }}  # Do not expose secrets directly in logs
