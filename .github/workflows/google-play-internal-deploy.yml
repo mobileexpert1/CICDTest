@@ -65,14 +65,7 @@ jobs:
       - name: Check file permissions
         run: ls -l ./app/build/outputs/bundle/release/
 
-      # Check file existence and permissions
-      - name: Check if AAB file exists
-        run: |
-          if [ -f ./app/build/outputs/bundle/release/app-release.aab ]; then
-            echo "AAB file exists at: $(pwd)/app/build/outputs/bundle/release/app-release.aab"
-          else
-            echo "AAB file does not exist!" && exit 1
-          fi
+
 
       # Deploy to Google Play (Internal Test) without printing sensitive data
       - name: Deploy to Google Play (Internal Test)
@@ -87,3 +80,12 @@ jobs:
           changesNotSentForReview: false
         env:
           JAVA_HOME: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/17.0.14-7/x64
+
+      # Check file existence and permissions
+      - name: Check if AAB file exists
+        run: |
+          if [ -f ./app/build/outputs/bundle/release/app-release.aab ]; then
+            echo "AAB file exists at: $(pwd)/app/build/outputs/bundle/release/app-release.aab"
+          else
+            echo "AAB file does not exist!" && exit 1
+          fi
