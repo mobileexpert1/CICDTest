@@ -74,10 +74,11 @@ jobs:
             echo "AAB file does not exist!" && exit 1
           fi
 
+      # Deploy to Google Play (Internal Test) without printing sensitive data
       - name: Deploy to Google Play (Internal Test)
         uses: r0adkll/upload-google-play@v1
         with:
-          serviceAccountJson: ${{ secrets.GOOGLE_PLAY_JSON_KEY }}
+          serviceAccountJson: ${{ secrets.GOOGLE_PLAY_JSON_KEY }}  # Do not expose secrets directly in logs
           packageName: com.cicdtest
           releaseFiles: ${{ github.workspace }}/app/build/outputs/bundle/release/app-release.aab  # Use absolute path if necessary
           track: internal
@@ -86,4 +87,3 @@ jobs:
           changesNotSentForReview: false
         env:
           JAVA_HOME: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/17.0.14-7/x64
-
