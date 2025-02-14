@@ -74,7 +74,6 @@ jobs:
             echo "AAB file does not exist!" && exit 1
           fi
 
-
       # Deploy to Google Play (Internal Test) without printing sensitive data
       - name: Deploy to Google Play (Internal Test)
         uses: r0adkll/upload-google-play@v1
