@@ -80,7 +80,7 @@ jobs:
         with:
           serviceAccountJson: ${{ secrets.GOOGLE_PLAY_JSON_KEY }}
           packageName: com.cicdtest
-          releaseFiles: /home/runner/work/CICDTest/CICDTest/app/build/outputs/bundle/release/app-release.aab
+          releaseFiles: ${{ github.workspace }}/app/build/outputs/bundle/release/app-release.aab  # Use absolute path if necessary
           track: internal
           inAppUpdatePriority: 0
           status: completed
