@@ -82,13 +82,11 @@ jobs:
           serviceAccountJsonPlainText: ${{ secrets.GOOGLE_PLAY_JSON_KEY }}  # Do not expose secrets directly in logs
           packageName: com.cicdtest
           releaseFiles: ${{ github.workspace }}/app/build/outputs/bundle/release/app-release.aab  # Use absolute path if necessary
-         # track: internal
-         # inAppUpdatePriority: 5
+          track: internal
+          inAppUpdatePriority: 5
           status: completed
           changesNotSentForReview: false
-          track: ${{ env.RELEASE_TRACK }}
-          releaseName: ${{ env.VERSION_CODE }} (${{ env.VERSION_NAME }})
-          inAppUpdatePriority: ${{ env.IN_APP_UPDATE_PRIORITY }}
+
         env:
           JAVA_HOME: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/17.0.14-7/x64
 
