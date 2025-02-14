@@ -83,9 +83,11 @@ jobs:
           packageName: com.cicdtest
           releaseFiles: ${{ github.workspace }}/app/build/outputs/bundle/release/app-release.aab  # Use absolute path if necessary
           track: internal
-          inAppUpdatePriority: 0
+          inAppUpdatePriority: 5
           status: completed
           changesNotSentForReview: false
+          whatsNewDirectory: ReleaseNotes/
+          mappingFile: app/build/outputs/mapping/release/mapping.txt
         env:
           JAVA_HOME: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/17.0.14-7/x64
 
