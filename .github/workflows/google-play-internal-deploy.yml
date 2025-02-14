@@ -85,7 +85,6 @@ jobs:
           inAppUpdatePriority: 0
           status: completed
           changesNotSentForReview: false
-        working-directory: ./  # Ensure we're in the root of the repo
         env:
           JAVA_HOME: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/17.0.14-7/x64
 
