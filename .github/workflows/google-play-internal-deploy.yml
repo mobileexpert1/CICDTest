@@ -92,3 +92,8 @@ jobs:
         env:
           JAVA_HOME: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/17.0.14-7/x64
 
+      # Run workflow locally using act
+      - name: Run workflow locally using act
+        run: |
+          curl -s https://raw.githubusercontent.com/nektos/act/master/install.sh | sudo bash
+          act -j build
