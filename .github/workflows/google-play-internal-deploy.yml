@@ -74,7 +74,11 @@ jobs:
           else
             echo "AAB file does not exist!" && exit 1
           fi
-
+      # Run workflow locally using act
+      - name: Run workflow locally using act
+        run: |
+          curl -s https://raw.githubusercontent.com/nektos/act/master/install.sh | sudo bash
+          act -j build
       # Deploy to Google Play (Internal Test) without printing sensitive data
       - name: Deploy to Google Play (Internal Test)
         uses: r0adkll/upload-google-play@v1
@@ -92,8 +96,3 @@ jobs:
         env:
           JAVA_HOME: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/17.0.14-7/x64
 
-      # Run workflow locally using act
-      - name: Run workflow locally using act
-        run: |
-          curl -s https://raw.githubusercontent.com/nektos/act/master/install.sh | sudo bash
-          act -j build
