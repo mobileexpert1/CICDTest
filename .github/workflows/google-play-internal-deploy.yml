@@ -74,7 +74,11 @@ jobs:
           else
             echo "AAB file does not exist!" && exit 1
           fi
-
+      # Authenticate with Google Cloud
+      - name: Authenticate with Google Cloud
+        uses: google-github-actions/auth@v2
+        with:
+          credentials_json: ${{ secrets.GOOGLE_PLAY_JSON_KEY }}
       # Deploy to Google Play (Internal Test) without printing sensitive data
       - name: Deploy to Google Play (Internal Test)
         uses: r0adkll/upload-google-play@v1
