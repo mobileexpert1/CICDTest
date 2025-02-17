@@ -16,10 +16,7 @@ jobs:
       # Checkout the code from the repository
       - name: Checkout code
         uses: actions/checkout@v4
-      - name: Install act
-        uses: nektos/act-action@v2
-        with:
-           version: 'latest'
+
       # Set up JDK 11 for building the project
       - name: Set up JDK 11
         uses: actions/setup-java@v2
@@ -77,11 +74,7 @@ jobs:
           else
             echo "AAB file does not exist!" && exit 1
           fi
-      # Run workflow locally using act
-      - name: Run workflow locally using act
-        run: |
-          curl -s https://raw.githubusercontent.com/nektos/act/master/install.sh | sudo bash
-          act -j build
+
       # Deploy to Google Play (Internal Test) without printing sensitive data
       - name: Deploy to Google Play (Internal Test)
         uses: r0adkll/upload-google-play@v1
