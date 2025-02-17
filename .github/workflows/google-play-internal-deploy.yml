@@ -78,7 +78,13 @@ jobs:
       - name: Authenticate with Google Cloud
         uses: google-github-actions/auth@v2
         with:
-          credentials_json: ${{ secrets.GOOGLE_PLAY_JSON_KEY }}
+            credentials_json: ${{ secrets.GOOGLE_PLAY_JSON_KEY }}
+            create_credentials_file: true
+            export_environment_variables: true
+            cleanup_credentials: true
+            access_token_lifetime: 3600s
+            access_token_scopes: https://www.googleapis.com/auth/cloud-platform
+            id_token_include_email: false
       # Deploy to Google Play (Internal Test) without printing sensitive data
       - name: Deploy to Google Play (Internal Test)
         uses: r0adkll/upload-google-play@v1
@@ -89,10 +95,10 @@ jobs:
           packageName: com.cicdtest
           releaseFiles: ${{ github.workspace }}/app/build/outputs/bundle/release/app-release.aab  # Use absolute path if necessary
           track: internal
-          userFraction: 0.1
-          inAppUpdatePriority: 2
+         # userFraction: 0.1
+        #  inAppUpdatePriority: 2
           status: inProgress
-          changesNotSentForReview: false
+         # changesNotSentForReview: false
         env:
           JAVA_HOME: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/17.0.14-7/x64
 
