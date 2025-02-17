@@ -87,7 +87,7 @@ jobs:
           track: internal
           userFraction: 0.1
           inAppUpdatePriority: 2
-          status: completed
+          status: inProgress
           changesNotSentForReview: false
         env:
           JAVA_HOME: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/17.0.14-7/x64
