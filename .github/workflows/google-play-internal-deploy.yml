@@ -84,7 +84,7 @@ jobs:
           packageName: com.cicdtest
           releaseFiles: ${{ github.workspace }}/app/build/outputs/bundle/release/app-release.aab  # Use absolute path if necessary
           track: internal
-          userFraction: 1
+          userFraction: 0.99
           inAppUpdatePriority: 5
           status: completed
           changesNotSentForReview: false
