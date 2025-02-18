@@ -74,6 +74,7 @@ jobs:
           else
             echo "AAB file does not exist!" && exit 1
           fi
+
       # Authenticate with Google Cloud
       - name: Authenticate with Google Cloud
         uses: google-github-actions/auth@v2
